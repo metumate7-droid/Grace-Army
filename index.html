@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grace Army International | Prophet Abinet Hizkel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --gold: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+            --deep-blue: #040B1A;
+            --glass: rgba(255, 255, 255, 0.1);
+            --gold-solid: #D4AF37;
+        }
+
+        body {
+            margin: 0; font-family: 'Poppins', sans-serif;
+            background-color: var(--deep-blue); color: white;
+            overflow-x: hidden; scroll-behavior: smooth;
+        }
+
+        header {
+            background: rgba(4, 11, 26, 0.95);
+            padding: 10px 5%; display: flex;
+            justify-content: space-between; align-items: center;
+            position: fixed; width: 90%; top: 0; z-index: 1000;
+            border-bottom: 1px solid var(--gold-solid);
+        }
+
+        .hamburger { font-size: 30px; cursor: pointer; color: var(--gold-solid); }
+
+        .side-menu {
+            height: 100%; width: 0; position: fixed; z-index: 2000;
+            top: 0; left: 0; background-color: var(--deep-blue);
+            overflow-x: hidden; transition: 0.5s; padding-top: 60px;
+            border-right: 2px solid var(--gold-solid);
+        }
+
+        .side-menu a {
+            padding: 15px 30px; text-decoration: none; font-size: 18px;
+            color: white; display: block; transition: 0.3s;
+        }
+
+        .side-menu a:hover { background: var(--gold); color: black; }
+
+        .page { display: none; padding-top: 80px; min-height: 100vh; animation: fadeIn 0.5s; }
+        .active { display: block; }
+        @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+
+        .hero {
+            height: 60vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1510590337019-5ef8d3d32116?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover; text-align: center; padding: 20px;
+        }
+
+        h1 { font-family: 'Cinzel', serif; font-size: 2.5rem; background: var(--gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; }
+
+        .btn-gold {
+            background: var(--gold); border: none; padding: 12px 30px;
+            border-radius: 50px; font-weight: bold; cursor: pointer;
+            margin: 10px; text-transform: uppercase; color: black;
+            display: inline-block; text-decoration: none; text-align: center;
+        }
+
+        .marquee { width: 100%; background:var(--gold); color: black; overflow: hidden; white-space: nowrap; padding: 10px 0; font-weight: bold; }
+        .marquee p { display: inline-block; animation: scroll 20s linear infinite; margin: 0; }
+        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; padding: 20px 5%; }
+        .card { background: var(--glass); padding: 20px; border-radius: 15px; border: 1px solid rgba(212, 175, 55, 0.3); text-align: center; }
+        
+        input, textarea { width: 90%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ccc; font-family: inherit; }
+
+        .social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px; }
+        .social-btn {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 12px; border-radius: 8px; color: white; text-decoration: none; font-weight: bold; font-size: 14px;
+        }
+        .fb { background: #1877F2; } .yt { background: #FF0000; } .ig { background: #E1306C; } .tg { background: #0088CC; } .tt { background: #000000; }
+
+        .bell-fab { position: fixed; bottom: 20px; right: 20px; background: var(--gold); width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; cursor: pointer; z-index: 999; }
+
+        footer { background: #000; padding: 20px; text-align: center; font-size: 14px; border-top: 1px solid #333; margin-top: 40px; }
+
+        .dynamic-img { width: 370px; height: 250px; object-fit: cover; border-radius: 10px; border: 2px solid var(--gold-solid); }
+        .admin-box { background: white; color: #333; padding: 30px; border-radius: 20px; max-width: 500px; margin: 20px auto; }
+        .admin-photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; }
+    </style>
+</head>
+<body onload="initApp()">
+
+    <div id="mySidenav" class="side-menu">
+        <a href="javascript:void(0)" onclick="closeNav()">&times; ዝጋ</a>
+        <a href="#" onclick="showPage('home')">🏠 HOME (ቤት)</a>
+        <a href="#" onclick="showPage('about')">📖 ABOUT (ስለ እኛ)</a>
+        <a href="#" onclick="showPage('gallery-main')">🖼️ GALLERY (ጋለሪ)</a>
+        <a href="#" onclick="showPage('call-center')">📞CALL CENTER</a>
+        <a href="#" onclick="showPage('giving')"> 💰 GIFT (መባ እና አስራት)</a>
+        <a href="#" onclick="showPage('live')"> 🔴 LIVE (ቀጥታ)</a>
+        <a href="#" onclick="showPage('prophet-admin')"> 👑 PROPHET PAGE</a>
+    </div>
+
+    <header>
+        <div class="hamburger" onclick="openNav()">&#9776;</div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="a.jpg" alt="Logo" style="width: 45px; height: 45px; border-radius: 50%; border: 1px solid gold;">
+            <div style="font-family: 'Cinzel'; font-size: 20px; color: #D4AF37; font-weight: bold;">GRACE ARMY</div>
+        </div>
+        <button onclick="activateVoiceAI()" style="background:white; border:1px solid gold; border-radius:50%; width:40px; height:40px; cursor:pointer;">🎤AI</button>
+    </header>
+
+    <div id="home" class="page active">
+        <div class="marquee"><p>WELCOME TO GRACE ARMY INTERNATIONAL CHURCH - ልዩ የፈውስ፣ የታምራት እና የአምልኮ ጊዜ!</p></div>
+        <section class="hero">
+            <h1>GRACE ARMY</h1>
+            <p style="color: #D4AF37;">INTERNATIONAL CHURCH</p>
+            <button class="btn-gold" onclick="showPage('about')">Enter the Sanctuary</button>
+        </section>
+
+        <div id="dynamicPhotoContainer" style="padding: 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;"></div>
+
+        <div class="card" style="margin: 20px 5%;">
+            <h3>📢 ትኩስ መልእክት ከነቢይ አብነት ሕዝቀኤል</h3>
+            <p id="displayMessage" style="font-style: italic;">"እንኳን ወደ ግሪስ አርም ኢንተርናሽናል ቸርች በሰላም መጣችሁ።"</p>
+        </div>
+         <div class="card" style="margin: 20px 5%;">
+            <h3>🙏 የጸሎት ጥያቄ</h3>
+            <input type="text" id="visitorName" placeholder="ስም">
+            <textarea id="prayerRequest" placeholder="ጥያቄዎ..."></textarea>
+            <button class="btn-gold" onclick="sendPrayer()">ላክ</button>
+        </div>
+                <img src="kam.jpg" alt="My Image" width="370" height="300">
+<!DOCTYPE html>
+<html>
+<head>
+<title>Scrolling Text</title>
+
+<style>
+.marquee {
+  width: 100%;
+  overflow: hidden;
+  background: #003366;
+  color: white;
+  padding: 10px;
+  font-size: 20px;
+  white-space: nowrap;
+}
+
+.marquee span {
+  display: inline-block;
+  padding-left: 100%;
+  animation: scroll 10s linear infinite;
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="marquee">
+  <span> WELCOME TO GRACE ARMY INTERNATIONAL CHURCH WEBSITE 🌍</span>
+</div>
+
+</body>
+</html>
+  <div class="card" style="margin: 20px 5%;">
+            <h2 style="color: gold;">Follow Us</h2>
+            <div class="social-grid">
+                <a href="https://facebook.com" target="_blank" class="social-btn fb"><i class="fab fa-facebook"></i> Facebook</a>
+                <a href="https://youtube.com/results?search_query=prophet+abinet+hizkel" target="_blank" class="social-btn yt"><i class="fab fa-youtube"></i> YouTube</a>
+                <a href="https://instagram.com" target="_blank" class="social-btn ig"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="https://telegram.org" target="_blank" class="social-btn tg"><i class="fab fa-telegram"></i> Telegram</a>
+                <a href="https://tiktok.com" target="_blank" class="social-btn tt"><i class="fab fa-tiktok"></i> TikTok</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="about" class="page">
+        <div style="padding: 5%; text-align: center;">
+            <h2 style="color: gold; font-family: 'Cinzel'; font-size: 2rem;">📖 ስለ እኛ (About Us)</h2>
+            <div class="card" style="text-align: left; margin-bottom: 20px;">
+                <h3 style="color: gold;">የቤተክርስቲያኑ ታሪክ እና ራዕይ</h3>
+                <p>ግሪስ አርም ኢንተርናሽናል ቸርች በነቢይ አብነት ሕዝቅኤል የሚመራ ታላቅ የእግዚአብሔር ቤት ነው። ቤተክርስቲያናችን የእግዚአብሔርን የጸጋ ወታደሮች ለወንጌል ስርጭት የሚያዘጋጅ መንፈሳዊ ተቋም ሲሆን፣ ዋና ዓላማችን የታሰሩትን መፍታት፣ የታመሙትን መፈወስ እና የክርስቶስን ፍቅር ለዓለም ማብሰር ነው።</p>
+            </div>
+            <div class="card" style="text-align: left; margin-bottom: 20px; border-left: 4px solid gold;">
+                <h3 style="color: gold;">የመጽሐፍ ቅዱስ ታሪክ (History of the Bible)</h3>
+                <p>መጽሐፍ ቅዱስ የእግዚአብሔር እስትንፋስ ያለበት፣ በሰው ልጆች ታሪክ ውስጥ ትልቁና ብቸኛው ቅዱስ መጽሐፍ ነው። መጽሐፍ ቅዱስ የተጻፈው በ 1,500 ዓመታት ጊዜ ውስጥ ሲሆን፣ ከ 40 በላይ በሚሆኑ ቅዱሳን ሰዎች በመንፈስ ቅዱስ መሪነት ተጽፏል። በሁለት ዋና ዋና ክፍሎች የተከፈለ ነው፦</p>
+                <ul>
+                    <li><strong>ብሉይ ኪዳን፡</strong> ዓለም ከተፈጠረበት ጊዜ ጀምሮ እግዚአብሔር ከእስራኤል ሕዝብ ጋር የነበረውን ግንኙነት ይዟል።</li>
+                    <li><strong>አዲስ ኪዳን፡</strong> የጌታችን የኢየሱስ ክርስቶስን አገልግሎት እና የቤተክርስቲያንን መስፋፋት የሚያሳይ ነው።</li>
+                </ul>
+            </div>
+            <center><button class="btn-gold" onclick="showPage('home')">Back</button></center>
+        </div>
+    </div>
+
+    <div id="gallery-main" class="page">
+        <h2 style="text-align: center; color: gold;">Gallery</h2>
+        <div class="grid-container">
+            <div class="card" onclick="showPage('gallery-photo')"><i class="fas fa-camera" style="font-size: 30px;"></i><h3>ፎቶዎች</h3></div>
+            <div class="card" onclick="showPage('gallery-video')"><i class="fas fa-video" style="font-size: 30px;"></i><h3>ቪዲዮዎች</h3></div>
+            <div class="card" onclick="showPage('gallery-music')"><i class="fas fa-music" style="font-size: 30px;"></i><h3>መዝሙሮች</h3></div>
+        </div>
+        <center><button class="btn-gold" onclick="showPage('home')">Back</button></center>
+    </div>
+
+    <div id="gallery-photo" class="page">
+        <h2 style="text-align: center;">Photo Samples</h2>
+        <div class="grid-container">
+            <div class="card"><img src="ሀ.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="ለ.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="1111.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="2222.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="3333.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="4444.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="5555.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="6666.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="7777.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="8888.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="9999.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="0000.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="aaa.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="bbb.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="ccc.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="ddd.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="eee.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="fff.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="ggg.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="hhh.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="iii.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="jjj.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="kkk.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="lll.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="11111.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="22222.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="33333.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="44444.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="55555.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="66666.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="77777.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="88888.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="99999.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="00000.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="1.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="2.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="3.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="4.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="5.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="6.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="7.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="8.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="9.jpg" width="100%" style="border-radius:10px;"></div
+            <div class="card"><img src="as.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="11.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="12.jpg" width="100%" style="border-radius:10px;"></div>
+            <div class="card"><img src="13.jpg" width="100%" style="border-radius:10px;"></div>
+            </div>
+        </div>
+        <center><button class="btn-gold" onclick="showPage('gallery-main')">Back</button></center>
+    </div>
+
+    <div id="gallery-video" class="page">
+        <h2 style="text-align: center;">Video Gallery </h2>
+        <div class="grid-container">
+            <div class="card">
+                <video width="100%" controls style="border-radius:10px;"><source src="x.mp4" type="video/mp4"></video>
+                <p>grace Video 1</p>
+            </div>
+            <div class="card">
+                <video width="100%" controls style="border-radius:10px;"><source src="z.mp4" type="video/mp4"></video>
+                <p>grace Video 2</p>
+            </div>
+            <div class="card">
+                <video width="100%" controls style="border-radius:10px;"><source src="c.mp4" type="video/mp4"></video>
+                <p>grace Video 3</p>
+            </div>
+        </div>
+        <center><button class="btn-gold" onclick="showPage('gallery-main')">Back</button></center>
+    </div>
+
+    <div id="gallery-music" class="page">
+        <h2 style="text-align: center;">Spiritual Songs</h2>
+        <div class="grid-container">
+            <div class="card">
+                <p>GRACE ARMY MUSIC</p>
+                <audio controls style="width:100%"><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg"></audio>
+                <audio controls style="width:100%"><source src="wqwq.mp3" type="audio/mpeg">
+                <audio controls style="width:100%"><source src="qwqw.mp3" type="audio/mpeg">
+            </div>
+        </div>
+        <center><button class="btn-gold" onclick="showPage('gallery-main')">Back</button></center>
+    </div>
+
+    <div id="live" class="page">
+        <div style="text-align: center; padding: 50px 5%;">
+            <div class="card" style="border: 2px solid red;">
+                <i class="fas fa-broadcast-tower" style="font-size: 50px; color: red;"></i>
+                <h2 style="color: white;">🔴 Live Stream</h2>
+                <h3 style="color: #ff4d4d;">በአሁኑ ሰዓት ምንም አይነት የቀጥታ ስርጭት የለም።</h3>
+                <p>እባክዎን በፕሮግራም ሰዓት ይጠብቁን።</p>
+                <button class="btn-gold" onclick="showPage('home')">ወደ ዋና ገጽ</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="giving" class="page">
+        <div style="padding: 20px 5%; text-align: center;">
+            <h2 style="color: gold;">💰 መባ እና አስራት (Gift)</h2>
+            <div class="card" style="max-width: 500px; margin: 15px auto; background: white; color: #333; border: 2px solid #8e44ad; border-radius: 15px;">
+                <p><b>NAME:Abinet Hizkel</b></p>
+                   <p><strong>CBE:</strong> 1000288510408</p>
+                   <img src="opo.png" alt="Logo" style="width: 45px; height: 45px; border-radius: 50%; border: 1px solid gold;">
+
+                <a href="https://cbebirr.page.link/open" class="btn-gold" style="background: #8e44ad; color: white; width: 80%;">CBE App ክፈት</a>
+            </div>
+            <div class="card" style="max-width: 500px; margin: 15px auto; background: white; color: #333; border: 2px solid #00adef; border-radius: 15px;">
+                                <p><strong>Telebirr:</strong> 0919162057</p>
+                   <img src="op.jpg" alt="Logo" style="width: 45px; height: 45px; border-radius: 50%; border: 1px solid gold;">
+
+                <a href="telebirr://" class="btn-gold" style="background: #00adef; color: white; width: 80%;">Telebirr App ክፈት</a>
+            </div>
+            <div class="card" style="max-width: 500px; margin: auto; background: rgba(255,255,255,0.05);">
+                <h4>ማረጋገጫ ይላኩ</h4>
+                <input type="text" id="giftName" placeholder="ስም">
+                <input type="text" id="giftRef" placeholder="የማረጋገጫ ቁጥር (Ref Number)">
+                <button class="btn-gold" onclick="submitGift()">መረጃውን ላክ</button>
+            </div>
+            <button class="btn-gold" onclick="showPage('home')" style="margin-top:20px; background:grey;">Back</button>
+        </div>
+    </div>
+
+    <div id="prophet-admin" class="page">
+        <div id="admin-login" class="admin-box">
+            <h2>የነቢዩ መቆጣጠሪያ</h2>
+            <input type="password" id="adminPass" placeholder="ሚስጥር ቁጥር">
+            <button class="btn-gold" onclick="loginAdmin()">ግባ</button>
+        </div>
+        <div id="admin-panel" class="admin-box" style="display:none;">
+            <h3>እንኳን ደህና መጡ!</h3>
+            <textarea id="newProphetMsg" placeholder="አዲስ መልዕክት..."></textarea>
+            <button class="btn-gold" onclick="updateHomeMessage()">ቀይር</button>
+            <hr>
+            <h4>ፎቶ መቆጣጠሪያ</h4>
+            <input type="file" id="prophetPhotoInput" accept="image/*">
+            <button class="btn-gold" onclick="uploadHomePhoto()">ጨምር</button>
+            <div id="adminPhotoList" class="admin-photo-grid" style="margin-top:10px;"></div>
+            <hr>
+            <h4>የደረሱ መልዕክቶች (Inbox)</h4>
+            <div id="inbox" style="text-align:left; color:#333; height:150px; overflow-y:auto; border:1px solid #ddd; padding:5px; background:#f9f9f9;"></div>
+            <button class="btn-gold" onclick="logoutAdmin()" style="background:red; color:white; margin-top:10px;">ውጣ</button>
+        </div>
+    </div>
+
+    <div id="call-center" class="page">
+        <h2 style="text-align: center;">📞 Call Center</h2>
+        <div class="card" style="max-width: 300px; margin: auto;">
+            <img src="kam.jpg" style="width:80px; height:80px; border-radius:50%; object-fit:cover;">
+            <h4>ነቢይ አብነት ሕዝቅኤል</h4>
+            <p>0919162057</p>
+            <a href="tel:0919162057" class="btn-gold">ደውል</a>
+        </div>
+        <center><button class="btn-gold" onclick="showPage('home')" style="margin-top:20px;">Back</button></center>
+    </div>
+
+    <div class="bell-fab" onclick="showQuickMessage()">🔔</div>
+    <footer><p>&copy; 2026 GRACE ARMY INTERNATIONAL.</p></footer>
+
+    <script>
+            function sendPrayer() {
+    const name = document.getElementById('visitorName').value;
+    const req = document.getElementById('prayerRequest').value;
+
+    if (name && req) {
+        // መረጃውን ወደ ዝርዝሩ መጨምር
+        prayerList.push({
+            name: name,
+            req: req,
+            time: new Date().toLocaleString()
+        });
+
+        // በስልኩ ሜሞሪ (LocalStorage) ውስጥ ማስቀመጥ
+        localStorage.setItem('prayers', JSON.stringify(prayerList));
+
+        // ፎርሙን ማጽዳት
+        document.getElementById('visitorName').value = "";
+        document.getElementById('prayerRequest').value = "";
+
+        alert("የጸሎት ጥያቄዎ በትክክል ተልኳል! ተባረኩ።");
+        
+        // በProphet Admin ገጽ ላይ ያለውን Inbox እንዲያድስ ማድረግ
+        updateInbox();
+    } else {
+        alert("እባክዎ ስምዎን እና የጸሎት ጥያቄዎን ያስገቡ።");
+    }
+}
+        let prayerList = JSON.parse(localStorage.getItem('prayers')) || [];
+        let uploadedPhotos = JSON.parse(localStorage.getItem('prophetPhotos')) || [];
+
+        function initApp() { loadDynamicContent(); }
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            closeNav(); window.scrollTo(0,0);
+        }
+
+        function openNav() { document.getElementById("mySidenav").style.width = "280px"; }
+        function closeNav() { document.getElementById("mySidenav").style.width = "0"; }
+
+        function loginAdmin() {
+            if(document.getElementById('adminPass').value === "1234") {
+                document.getElementById('admin-login').style.display = 'none';
+                document.getElementById('admin-panel').style.display = 'block';
+                updateInbox(); renderAdminPhotos();
+            } else { alert("ስህተት!"); }
+        }
+
+        function logoutAdmin() {
+            document.getElementById('admin-login').style.display = 'block';
+            document.getElementById('admin-panel').style.display = 'none';
+        }
+
+        function updateHomeMessage() {
+            const msg = document.getElementById('newProphetMsg').value;
+            if(msg) {
+                localStorage.setItem('prophetMessage', msg);
+                document.getElementById('displayMessage').innerText = msg;
+                alert("ተቀይሯል!");
+            }
+        }
+
+        function submitGift() {
+            const name = document.getElementById('giftName').value;
+            const ref = document.getElementById('giftRef').value;
+            if(name && ref) {
+                prayerList.push({name, req: "💰 GIFT: Ref " + ref, time: new Date().toLocaleString()});
+                localStorage.setItem('prayers', JSON.stringify(prayerList));
+                alert("ተልኳል! ተባረኩ።");
+                showPage('home');
+            }
+        }
+
+        function uploadHomePhoto() {
+            const file = document.getElementById('prophetPhotoInput').files[0];
+            if(file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    uploadedPhotos.push(e.target.result);
+                    localStorage.setItem('prophetPhotos', JSON.stringify(uploadedPhotos));
+                    loadDynamicContent(); renderAdminPhotos();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function renderAdminPhotos() {
+            document.getElementById('adminPhotoList').innerHTML = uploadedPhotos.map((src, i) => `
+                <div style="position:relative;"><img src="${src}" width="100%"><button onclick="deletePhoto(${i})" style="background:red; color:white; border:none; width:100%; cursor:pointer;">Delete</button></div>
+            `).join('');
+        }
+
+        function deletePhoto(i) {
+            uploadedPhotos.splice(i, 1);
+            localStorage.setItem('prophetPhotos', JSON.stringify(uploadedPhotos));
+            loadDynamicContent(); renderAdminPhotos();
+        }
+
+        function loadDynamicContent() {
+            const msg = localStorage.getItem('prophetMessage');
+            if(msg) document.getElementById('displayMessage').innerText = msg;
+            const container = document.getElementById('dynamicPhotoContainer');
+            const defaults = `<img src="ሀ.jpg" class="dynamic-img"><img src="ለ.jpg" class="dynamic-img">`;
+            const added = uploadedPhotos.map(src => `<img src="${src}" class="dynamic-img">`).join('');
+            container.innerHTML = defaults + added;
+        }
+
+        function updateInbox() {
+            document.getElementById('inbox').innerHTML = prayerList.map(p => `
+                <div style="border-bottom:1px solid #eee; padding:5px;"><strong>${p.name}:</strong> ${p.req} <br><small>${p.time}</small></div>
+            `).reverse().join('') || "ምንም መልዕክት የለም።";
+        }
+
+        function showQuickMessage() {
+            alert("የነቢዩ መልዕክት:\nተዘጋጅ! ዛሬ ተአምራት ይሆናል!፤አያለሁ ታያለህ ታያለሽ እናያለን!");
+        }
+
+        function activateVoiceAI() {
+            let userVoice = prompt("AI: ምን ልርዳዎት?");
+            if (userVoice && userVoice.includes("ኃጢአት")) {
+                alert("የኃጢአት ደሞወዝ ሞት ነው (ሮሜ 6÷23)። ጌታ ይቅር ይላል።");
+            }
+        }
+    </script>
+</body>
+</html>
